@@ -31,6 +31,38 @@ const CustomerCardDemo = () => {
   );
 };
 
+const CustomerHealthDisplayDemo = () => {
+  try {
+    const CustomerHealthDisplay = require('../components/CustomerHealthDisplay')?.default;
+
+    if (CustomerHealthDisplay) {
+      const sampleHealthData = {
+        payment: { daysSinceLastPayment: 12, averagePaymentDelay: 2, overdueAmount: 0 },
+        engagement: { loginFrequency: 5, featureUsageCount: 22, supportTickets: 1 },
+        contract: { daysUntilRenewal: 90, contractValue: 24000, recentUpgrades: 1 },
+        support: { averageResolutionTime: 4, satisfactionScore: 88, escalationCount: 0 },
+      };
+
+      return (
+        <div className="space-y-4">
+          <p className="text-green-600 text-sm font-medium">✅ CustomerHealthDisplay implemented!</p>
+          <div className="flex flex-wrap gap-4">
+            <CustomerHealthDisplay healthData={sampleHealthData} />
+          </div>
+        </div>
+      );
+    }
+  } catch (error) {
+    // Component doesn't exist yet
+  }
+
+  return (
+    <div className="text-gray-500 text-sm">
+      After Exercise 5, your CustomerHealthDisplay widget will appear here.
+    </div>
+  );
+};
+
 const DashboardWidgetDemo = ({ widgetName, exerciseNumber }: { widgetName: string, exerciseNumber: number }) => {
   return (
     <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center text-gray-500 text-sm">
@@ -76,11 +108,18 @@ export default function Home() {
           </Suspense>
         </section>
 
+        {/* CustomerHealthDisplay Section */}
+        <section className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold mb-4">CustomerHealthDisplay Component</h3>
+          <Suspense fallback={<div className="text-gray-500">Loading...</div>}>
+            <CustomerHealthDisplayDemo />
+          </Suspense>
+        </section>
+
         {/* Dashboard Widgets Section */}
         <section className="bg-white rounded-lg shadow p-6">
           <h3 className="text-lg font-semibold mb-4">Dashboard Widgets</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <DashboardWidgetDemo widgetName="Domain Health Widget" exerciseNumber={5} />
             <DashboardWidgetDemo widgetName="Market Intelligence" exerciseNumber={6} />
             <DashboardWidgetDemo widgetName="Predictive Alerts" exerciseNumber={8} />
           </div>
