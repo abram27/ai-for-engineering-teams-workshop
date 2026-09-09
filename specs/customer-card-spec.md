@@ -17,10 +17,11 @@
 - Clean, card-based visual design with domain information
 
 ### User Interface Requirements
-- Color-coded health indicators:
+- Color-coded health indicator applied to the full card background/border (not just a badge):
   - Red: 0-30 (poor health score)
   - Yellow: 31-70 (moderate health score)
   - Green: 71-100 (good health score)
+- Health score badge and text use the current health color for contrast against the tinted background
 - Responsive design for mobile and desktop
 - Clear typography hierarchy (name > company > health/domains)
 
@@ -66,7 +67,7 @@
 
 - [ ] Displays customer name, company name, and health score correctly
 - [ ] Shows customer domains with proper count when multiple domains exist
-- [ ] Health score colors match specification: red (0-30), yellow (31-70), green (71-100)
+- [ ] Card background/border reflects health score color: red (0-30), yellow (31-70), green (71-100)
 - [ ] Responsive design works on mobile (320px+), tablet (768px+), and desktop (1024px+)
 - [ ] Proper TypeScript interfaces defined and exported
 - [ ] Component accepts typed props from parent
