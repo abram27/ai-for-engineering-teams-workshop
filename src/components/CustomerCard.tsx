@@ -1,7 +1,10 @@
+import { memo } from 'react';
 import type { Customer } from '@/data/mock-customers';
 
 export interface CustomerCardProps {
   customer: Customer;
+  isSelected?: boolean;
+  onSelect?: (customerId: string) => void;
 }
 
 function getHealthColorClasses(healthScore: number): string {
@@ -14,14 +17,34 @@ function getHealthColorClasses(healthScore: number): string {
   return 'bg-green-100 text-green-800 border-green-300';
 }
 
-export default function CustomerCard({ customer }: CustomerCardProps) {
-  const { name, company, healthScore, domains } = customer;
+function CustomerCard({ customer, isSelected = false, onSelect }: CustomerCardProps) {
+  const { id, name, company, healthScore, domains } = customer;
   const healthColorClasses = getHealthColorClasses(healthScore);
   const domainCount = domains?.length ?? 0;
 
+  const handleSelect = () => {
+    onSelect?.(id);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onSelect?.(id);
+    }
+  };
+
   return (
     <div
-      className={`w-full rounded-lg border p-4 shadow-sm sm:p-5 ${healthColorClasses}`}
+      role="button"
+      tabIndex={0}
+      aria-pressed={isSelected}
+      onClick={handleSelect}
+      onKeyDown={handleKeyDown}
+      className={`w-full cursor-pointer rounded-lg border p-4 shadow-sm transition-shadow sm:p-5 ${healthColorClasses} ${
+        isSelected
+          ? 'outline outline-2 outline-offset-2 outline-blue-500 ring-2 ring-blue-500'
+          : ''
+      }`}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
@@ -57,3 +80,5 @@ export default function CustomerCard({ customer }: CustomerCardProps) {
     </div>
   );
 }
+
+export default memo(CustomerCard);
